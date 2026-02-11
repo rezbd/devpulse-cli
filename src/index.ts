@@ -1,18 +1,15 @@
-#!/usr/bin/env node
-import { Command } from "commander";
-
-const program = new Command();
+import { getUserProfile, getUserRepos } from "./github";
 
 program
-  .name("devpulse")
-  .description("Analyze GitHub developer activity")
-  .version("1.0.0");
+    .command("analyze <username>")
+    .action(async (username) => {
+        const profile = await getUserProfile(username);
+        const repos = await getUserRepos(username);
 
-program
-  .command("analyze <username>")
-  .description("Analyze a GitHub user")
-  .action((username) => {
-    console.log(`Analyzing GitHub user: ${username}`);
-  });
-
-program.parse();
+        console.log("\nDeveloper Summary");
+        console.log("-----------------");
+        console.log(`Name: ${profile.name}`);
+        console.log(`Public Repos: ${profile.public_repos}`);
+        console.log(`Followers: ${profile.followers}`);
+        console.log(`Total Repositories Fetched: ${repos.length}`);
+    });

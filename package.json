@@ -1,3 +1,4 @@
-"bin": {
-  "devpulse": "dist/index.js"
+"scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
 }
